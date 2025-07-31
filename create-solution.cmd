@@ -2,223 +2,457 @@
 setlocal enabledelayedexpansion
 
 :: Solution name
-set SOLUTION_NAME=Csnp
-dotnet new sln -n %SOLUTION_NAME% --force
+set PROJECT_NAME=csnp
+set PACKAGE_NAME=com.csnp
 
-:: Directories
+echo Creating CSNP DDD Java Spring Boot Solution Structure...
+echo.
+
+:: Root directories
 set ROOT_DIR=%cd%
 set SRC_DIR=%ROOT_DIR%\src
-set TEST_DIR=%ROOT_DIR%\tests
 set SHARED_DIR=%ROOT_DIR%\shared
 set MIGRATIONS_DIR=%ROOT_DIR%\migrations
 
-echo Creating CSNP DDD Production Solution Structure...
-echo.
+:: Create root build.gradle
+call :create_root_gradle
 
-:: SeedWork - Foundation layers
-echo Creating SeedWork foundation layers
-call :create_classlib %SHARED_DIR%\Csnp.SeedWork
-call :create_subfolder %SHARED_DIR%\Csnp.SeedWork\Domain
-call :create_subfolder %SHARED_DIR%\Csnp.SeedWork\Domain\ValueObjects
-call :create_subfolder %SHARED_DIR%\Csnp.SeedWork\Domain\Events
-call :create_subfolder %SHARED_DIR%\Csnp.SeedWork\Application
+:: SeedWork - Foundation layers (Shared Libraries)
+echo Creating SeedWork foundation layers...
+call :create_java_lib %SHARED_DIR%\seedwork
+call :create_package_structure %SHARED_DIR%\seedwork\src\main\java\%PACKAGE_NAME%\seedwork\domain valueobjects
+call :create_package_structure %SHARED_DIR%\seedwork\src\main\java\%PACKAGE_NAME%\seedwork\domain events
+call :create_package_structure %SHARED_DIR%\seedwork\src\main\java\%PACKAGE_NAME%\seedwork application
 
 :: SharedKernel - Shared domain logic
 echo Creating SharedKernel shared domain logic layers...
-call :create_classlib %SHARED_DIR%\Csnp.SharedKernel.Domain
-call :create_subfolder %SHARED_DIR%\Csnp.SharedKernel.Domain\Events
-call :create_subfolder %SHARED_DIR%\Csnp.SharedKernel.Domain\Exceptions
-call :create_subfolder %SHARED_DIR%\Csnp.SharedKernel.Domain\Rules
+call :create_java_lib %SHARED_DIR%\shared-kernel-domain
+call :create_package_structure %SHARED_DIR%\shared-kernel-domain\src\main\java\%PACKAGE_NAME%\sharedkernel\domain events
+call :create_package_structure %SHARED_DIR%\shared-kernel-domain\src\main\java\%PACKAGE_NAME%\sharedkernel\domain exceptions
+call :create_package_structure %SHARED_DIR%\shared-kernel-domain\src\main\java\%PACKAGE_NAME%\sharedkernel\domain rules
 
-call :create_classlib %SHARED_DIR%\Csnp.SharedKernel.Application
-call :create_subfolder %SHARED_DIR%\Csnp.SharedKernel.Application\Behaviors
-call :create_subfolder %SHARED_DIR%\Csnp.SharedKernel.Application\Commands
-call :create_subfolder %SHARED_DIR%\Csnp.SharedKernel.Application\Queries
-call :create_subfolder %SHARED_DIR%\Csnp.SharedKernel.Application\Events
+call :create_java_lib %SHARED_DIR%\shared-kernel-application
+call :create_package_structure %SHARED_DIR%\shared-kernel-application\src\main\java\%PACKAGE_NAME%\sharedkernel\application behaviors
+call :create_package_structure %SHARED_DIR%\shared-kernel-application\src\main\java\%PACKAGE_NAME%\sharedkernel\application commands
+call :create_package_structure %SHARED_DIR%\shared-kernel-application\src\main\java\%PACKAGE_NAME%\sharedkernel\application queries
+call :create_package_structure %SHARED_DIR%\shared-kernel-application\src\main\java\%PACKAGE_NAME%\sharedkernel\application events
 
-call :create_classlib %SHARED_DIR%\Csnp.SharedKernel.Infrastructure
-call :create_subfolder %SHARED_DIR%\Csnp.SharedKernel.Infrastructure\Events
-call :create_subfolder %SHARED_DIR%\Csnp.SharedKernel.Infrastructure\Messaging
+call :create_java_lib %SHARED_DIR%\shared-kernel-infrastructure
+call :create_package_structure %SHARED_DIR%\shared-kernel-infrastructure\src\main\java\%PACKAGE_NAME%\sharedkernel\infrastructure events
+call :create_package_structure %SHARED_DIR%\shared-kernel-infrastructure\src\main\java\%PACKAGE_NAME%\sharedkernel\infrastructure messaging
 
-:: Common - Cross-cutting utilities
-echo Creating Common cross-cutting layer...
-call :create_classlib %SHARED_DIR%\Csnp.Security.Infrastructure
-call :create_subfolder %SHARED_DIR%\Csnp.Security.Infrastructure\Security
+:: Security Infrastructure - Cross-cutting utilities
+echo Creating Security Infrastructure cross-cutting layer...
+call :create_java_lib %SHARED_DIR%\security-infrastructure
+call :create_package_structure %SHARED_DIR%\security-infrastructure\src\main\java\%PACKAGE_NAME%\security\infrastructure security
 
 :: EventBus - Event-driven communication
 echo Creating EventBus layer...
-call :create_classlib %SHARED_DIR%\Csnp.EventBus
-call :create_subfolder %SHARED_DIR%\Csnp.EventBus\Abstractions
-call :create_subfolder %SHARED_DIR%\Csnp.EventBus\InMemory
-call :create_subfolder %SHARED_DIR%\Csnp.EventBus\RabbitMQ
+call :create_java_lib %SHARED_DIR%\event-bus
+call :create_package_structure %SHARED_DIR%\event-bus\src\main\java\%PACKAGE_NAME%\eventbus abstractions
+call :create_package_structure %SHARED_DIR%\event-bus\src\main\java\%PACKAGE_NAME%\eventbus inmemory
+call :create_package_structure %SHARED_DIR%\event-bus\src\main\java\%PACKAGE_NAME%\eventbus rabbitmq
 
 :: Credential Bounded Context
 echo Creating Credential bounded context...
-call :create_webapi %SRC_DIR%\Credential\Csnp.Credential.Api
+call :create_spring_boot_app %SRC_DIR%\credential\credential-api
 
-call :create_classlib %SRC_DIR%\Credential\Csnp.Credential.Application
-call :create_subfolder %SRC_DIR%\Credential\Csnp.Credential.Application\Commands
-call :create_subfolder %SRC_DIR%\Credential\Csnp.Credential.Application\Queries
-call :create_subfolder %SRC_DIR%\Credential\Csnp.Credential.Application\Events
-call :create_subfolder %SRC_DIR%\Credential\Csnp.Credential.Application\Behaviors
+call :create_java_lib %SRC_DIR%\credential\credential-application
+call :create_package_structure %SRC_DIR%\credential\credential-application\src\main\java\%PACKAGE_NAME%\credential\application commands
+call :create_package_structure %SRC_DIR%\credential\credential-application\src\main\java\%PACKAGE_NAME%\credential\application queries
+call :create_package_structure %SRC_DIR%\credential\credential-application\src\main\java\%PACKAGE_NAME%\credential\application events
+call :create_package_structure %SRC_DIR%\credential\credential-application\src\main\java\%PACKAGE_NAME%\credential\application behaviors
 
-call :create_classlib %SRC_DIR%\Credential\Csnp.Credential.Domain
-call :create_subfolder %SRC_DIR%\Credential\Csnp.Credential.Domain\Aggregates
-call :create_subfolder %SRC_DIR%\Credential\Csnp.Credential.Domain\Events
-call :create_subfolder %SRC_DIR%\Credential\Csnp.Credential.Domain\Specifications
+call :create_java_lib %SRC_DIR%\credential\credential-domain
+call :create_package_structure %SRC_DIR%\credential\credential-domain\src\main\java\%PACKAGE_NAME%\credential\domain aggregates
+call :create_package_structure %SRC_DIR%\credential\credential-domain\src\main\java\%PACKAGE_NAME%\credential\domain events
+call :create_package_structure %SRC_DIR%\credential\credential-domain\src\main\java\%PACKAGE_NAME%\credential\domain specifications
 
-call :create_classlib %SRC_DIR%\Credential\Csnp.Credential.Infrastructure
-call :create_subfolder %SRC_DIR%\Credential\Csnp.Credential.Infrastructure\Persistence
-call :create_subfolder %SRC_DIR%\Credential\Csnp.Credential.Infrastructure\External
-call :create_subfolder %SRC_DIR%\Credential\Csnp.Credential.Infrastructure\Services
-call :create_subfolder %SRC_DIR%\Credential\Csnp.Credential.Infrastructure\Events
+call :create_java_lib %SRC_DIR%\credential\credential-infrastructure
+call :create_package_structure %SRC_DIR%\credential\credential-infrastructure\src\main\java\%PACKAGE_NAME%\credential\infrastructure persistence
+call :create_package_structure %SRC_DIR%\credential\credential-infrastructure\src\main\java\%PACKAGE_NAME%\credential\infrastructure external
+call :create_package_structure %SRC_DIR%\credential\credential-infrastructure\src\main\java\%PACKAGE_NAME%\credential\infrastructure services
+call :create_package_structure %SRC_DIR%\credential\credential-infrastructure\src\main\java\%PACKAGE_NAME%\credential\infrastructure events
 
 :: Notification Bounded Context
 echo Creating Notification bounded context...
-call :create_webapi %SRC_DIR%\Notification\Csnp.Notification.Api
+call :create_spring_boot_app %SRC_DIR%\notification\notification-api
 
-call :create_classlib %SRC_DIR%\Notification\Csnp.Notification.Application
-call :create_subfolder %SRC_DIR%\Notification\Csnp.Notification.Application\Commands
-call :create_subfolder %SRC_DIR%\Notification\Csnp.Notification.Application\Queries
-call :create_subfolder %SRC_DIR%\Notification\Csnp.Notification.Application\Events
-call :create_subfolder %SRC_DIR%\Notification\Csnp.Notification.Application\Behaviors
+call :create_java_lib %SRC_DIR%\notification\notification-application
+call :create_package_structure %SRC_DIR%\notification\notification-application\src\main\java\%PACKAGE_NAME%\notification\application commands
+call :create_package_structure %SRC_DIR%\notification\notification-application\src\main\java\%PACKAGE_NAME%\notification\application queries
+call :create_package_structure %SRC_DIR%\notification\notification-application\src\main\java\%PACKAGE_NAME%\notification\application events
+call :create_package_structure %SRC_DIR%\notification\notification-application\src\main\java\%PACKAGE_NAME%\notification\application behaviors
 
-call :create_classlib %SRC_DIR%\Notification\Csnp.Notification.Domain
-call :create_subfolder %SRC_DIR%\Notification\Csnp.Notification.Domain\Aggregates
-call :create_subfolder %SRC_DIR%\Notification\Csnp.Notification.Domain\Events
-call :create_subfolder %SRC_DIR%\Notification\Csnp.Notification.Domain\Specifications
+call :create_java_lib %SRC_DIR%\notification\notification-domain
+call :create_package_structure %SRC_DIR%\notification\notification-domain\src\main\java\%PACKAGE_NAME%\notification\domain aggregates
+call :create_package_structure %SRC_DIR%\notification\notification-domain\src\main\java\%PACKAGE_NAME%\notification\domain events
+call :create_package_structure %SRC_DIR%\notification\notification-domain\src\main\java\%PACKAGE_NAME%\notification\domain specifications
 
-call :create_classlib %SRC_DIR%\Notification\Csnp.Notification.Infrastructure
-call :create_subfolder %SRC_DIR%\Notification\Csnp.Notification.Infrastructure\Persistence
-call :create_subfolder %SRC_DIR%\Notification\Csnp.Notification.Infrastructure\External
-call :create_subfolder %SRC_DIR%\Notification\Csnp.Notification.Infrastructure\Services
-call :create_subfolder %SRC_DIR%\Notification\Csnp.Notification.Infrastructure\Events
+call :create_java_lib %SRC_DIR%\notification\notification-infrastructure
+call :create_package_structure %SRC_DIR%\notification\notification-infrastructure\src\main\java\%PACKAGE_NAME%\notification\infrastructure persistence
+call :create_package_structure %SRC_DIR%\notification\notification-infrastructure\src\main\java\%PACKAGE_NAME%\notification\infrastructure external
+call :create_package_structure %SRC_DIR%\notification\notification-infrastructure\src\main\java\%PACKAGE_NAME%\notification\infrastructure services
+call :create_package_structure %SRC_DIR%\notification\notification-infrastructure\src\main\java\%PACKAGE_NAME%\notification\infrastructure events
 
 :: Presentation
 echo Creating Presentation layer...
-call :create_mvc %SRC_DIR%\Presentation\Csnp.Presentation.Web
+call :create_spring_boot_app %SRC_DIR%\presentation\presentation-web
 
 :: Migrations
 echo Creating Migration projects...
-call :create_classlib %MIGRATIONS_DIR%\Csnp.Migrations.Credential
-call :create_subfolder %MIGRATIONS_DIR%\Csnp.Migrations.Credential\Configurations
-call :create_subfolder %MIGRATIONS_DIR%\Csnp.Migrations.Credential\Seeds
+call :create_java_lib %MIGRATIONS_DIR%\credential-migrations
+call :create_package_structure %MIGRATIONS_DIR%\credential-migrations\src\main\java\%PACKAGE_NAME%\migrations\credential configurations
+call :create_package_structure %MIGRATIONS_DIR%\credential-migrations\src\main\java\%PACKAGE_NAME%\migrations\credential seeds
 
-call :create_classlib %MIGRATIONS_DIR%\Csnp.Migrations.Notification
-call :create_subfolder %MIGRATIONS_DIR%\Csnp.Migrations.Notification\Configurations
-call :create_subfolder %MIGRATIONS_DIR%\Csnp.Migrations.Notification\Seeds
+call :create_java_lib %MIGRATIONS_DIR%\notification-migrations
+call :create_package_structure %MIGRATIONS_DIR%\notification-migrations\src\main\java\%PACKAGE_NAME%\migrations\notification configurations
+call :create_package_structure %MIGRATIONS_DIR%\notification-migrations\src\main\java\%PACKAGE_NAME%\migrations\notification seeds
 
 :: Tests
 echo Creating test projects...
-call :create_test %TEST_DIR%\Csnp.Credential.Tests.Unit
-call :create_test %TEST_DIR%\Csnp.Credential.Tests.Integration
-call :create_test %TEST_DIR%\Csnp.Credential.Tests.Architecture
-call :create_test %TEST_DIR%\Csnp.Notification.Tests.Unit
-call :create_test %TEST_DIR%\Csnp.Notification.Tests.Integration
-call :create_test %TEST_DIR%\Csnp.Notification.Tests.Architecture
+call :create_test_project %SRC_DIR%\credential\credential-domain\src\test\java\%PACKAGE_NAME%\credential\domain
+call :create_test_project %SRC_DIR%\credential\credential-application\src\test\java\%PACKAGE_NAME%\credential\application
+call :create_test_project %SRC_DIR%\credential\credential-infrastructure\src\test\java\%PACKAGE_NAME%\credential\infrastructure
+call :create_test_project %SRC_DIR%\credential\credential-api\src\test\java\%PACKAGE_NAME%\credential\api
 
-echo Adding all projects to solution...
-:: Add all projects to solution
-for /R %%f in (*.csproj) do (
-    dotnet sln %SOLUTION_NAME%.sln add "%%f"
-)
+call :create_test_project %SRC_DIR%\notification\notification-domain\src\test\java\%PACKAGE_NAME%\notification\domain
+call :create_test_project %SRC_DIR%\notification\notification-application\src\test\java\%PACKAGE_NAME%\notification\application
+call :create_test_project %SRC_DIR%\notification\notification-infrastructure\src\test\java\%PACKAGE_NAME%\notification\infrastructure
+call :create_test_project %SRC_DIR%\notification\notification-api\src\test\java\%PACKAGE_NAME%\notification\api
 
-echo Setting up project references...
+:: Create settings.gradle
+call :create_settings_gradle
 
-:: SharedKernel layer dependencies
-dotnet add %SHARED_DIR%\Csnp.SharedKernel.Domain\Csnp.SharedKernel.Domain.csproj reference ^
-    %SHARED_DIR%\Csnp.SeedWork\Csnp.SeedWork.csproj
+:: Setup project references (equivalent to .NET project references)
+echo Setting up project dependencies...
+call :setup_project_dependencies
 
-dotnet add %SHARED_DIR%\Csnp.SharedKernel.Application\Csnp.SharedKernel.Application.csproj reference ^
-    %SHARED_DIR%\Csnp.SharedKernel.Domain\Csnp.SharedKernel.Domain.csproj
+:: Create gradle wrapper
+echo Creating Gradle wrapper...
+call gradle wrapper --gradle-version 8.5
 
-dotnet add %SHARED_DIR%\Csnp.SharedKernel.Infrastructure\Csnp.SharedKernel.Infrastructure.csproj reference ^
-    %SHARED_DIR%\Csnp.SharedKernel.Application\Csnp.SharedKernel.Application.csproj
+:: Create .gitignore
+call :create_gitignore
 
-:: Credential bounded context references
-dotnet add %SRC_DIR%\Credential\Csnp.Credential.Api\Csnp.Credential.Api.csproj reference ^
-    %SRC_DIR%\Credential\Csnp.Credential.Infrastructure\Csnp.Credential.Infrastructure.csproj
-
-dotnet add %SRC_DIR%\Credential\Csnp.Credential.Application\Csnp.Credential.Application.csproj reference ^
-    %SRC_DIR%\Credential\Csnp.Credential.Domain\Csnp.Credential.Domain.csproj ^
-    %SHARED_DIR%\Csnp.SharedKernel.Application\Csnp.SharedKernel.Application.csproj ^
-    %SHARED_DIR%\Csnp.EventBus\Csnp.EventBus.csproj
-
-dotnet add %SRC_DIR%\Credential\Csnp.Credential.Domain\Csnp.Credential.Domain.csproj reference ^
-    %SHARED_DIR%\Csnp.SharedKernel.Domain\Csnp.SharedKernel.Domain.csproj
-
-dotnet add %SRC_DIR%\Credential\Csnp.Credential.Infrastructure\Csnp.Credential.Infrastructure.csproj reference ^
-    %SRC_DIR%\Credential\Csnp.Credential.Application\Csnp.Credential.Application.csproj
-
-:: Notification bounded context references
-dotnet add %SRC_DIR%\Notification\Csnp.Notification.Api\Csnp.Notification.Api.csproj reference ^
-    %SRC_DIR%\Notification\Csnp.Notification.Infrastructure\Csnp.Notification.Infrastructure.csproj
-
-dotnet add %SRC_DIR%\Notification\Csnp.Notification.Application\Csnp.Notification.Application.csproj reference ^
-    %SRC_DIR%\Notification\Csnp.Notification.Domain\Csnp.Notification.Domain.csproj ^
-    %SHARED_DIR%\Csnp.SharedKernel.Application\Csnp.SharedKernel.Application.csproj ^
-    %SHARED_DIR%\Csnp.EventBus\Csnp.EventBus.csproj
-
-dotnet add %SRC_DIR%\Notification\Csnp.Notification.Domain\Csnp.Notification.Domain.csproj reference ^
-    %SHARED_DIR%\Csnp.SharedKernel.Domain\Csnp.SharedKernel.Domain.csproj
-
-dotnet add %SRC_DIR%\Notification\Csnp.Notification.Infrastructure\Csnp.Notification.Infrastructure.csproj reference ^
-    %SRC_DIR%\Notification\Csnp.Notification.Application\Csnp.Notification.Application.csproj
-
-:: Presentation references
-dotnet add %SRC_DIR%\Presentation\Csnp.Presentation.Web\Csnp.Presentation.Web.csproj reference ^
-    %SHARED_DIR%\Csnp.Security.Infrastructure\Csnp.Security.Infrastructure.csproj
-
-:: Migration projects references
-dotnet add %MIGRATIONS_DIR%\Csnp.Migrations.Credential\Csnp.Migrations.Credential.csproj reference ^
-    %SRC_DIR%\Credential\Csnp.Credential.Infrastructure\Csnp.Credential.Infrastructure.csproj
-
-dotnet add %MIGRATIONS_DIR%\Csnp.Migrations.Notification\Csnp.Migrations.Notification.csproj reference ^
-    %SRC_DIR%\Notification\Csnp.Notification.Infrastructure\Csnp.Notification.Infrastructure.csproj
-
-:: Test project references
-dotnet add %TEST_DIR%\Csnp.Credential.Tests.Unit\Csnp.Credential.Tests.Unit.csproj reference ^
-    %SRC_DIR%\Credential\Csnp.Credential.Application\Csnp.Credential.Application.csproj
-
-dotnet add %TEST_DIR%\Csnp.Credential.Tests.Integration\Csnp.Credential.Tests.Integration.csproj reference ^
-    %SRC_DIR%\Credential\Csnp.Credential.Api\Csnp.Credential.Api.csproj
-
-dotnet add %TEST_DIR%\Csnp.Credential.Tests.Architecture\Csnp.Credential.Tests.Architecture.csproj reference ^
-    %SRC_DIR%\Credential\Csnp.Credential.Infrastructure\Csnp.Credential.Infrastructure.csproj
-
-dotnet add %TEST_DIR%\Csnp.Notification.Tests.Unit\Csnp.Notification.Tests.Unit.csproj reference ^
-    %SRC_DIR%\Notification\Csnp.Notification.Application\Csnp.Notification.Application.csproj
-
-dotnet add %TEST_DIR%\Csnp.Notification.Tests.Integration\Csnp.Notification.Tests.Integration.csproj reference ^
-    %SRC_DIR%\Notification\Csnp.Notification.Api\Csnp.Notification.Api.csproj
-
-dotnet add %TEST_DIR%\Csnp.Notification.Tests.Architecture\Csnp.Notification.Tests.Architecture.csproj reference ^
-    %SRC_DIR%\Notification\Csnp.Notification.Infrastructure\Csnp.Notification.Infrastructure.csproj
+echo.
+echo Solution structure created successfully!
+echo.
+echo To build the project:
+echo   gradle build
+echo.
+echo To run specific service:
+echo   gradle :credential-api:bootRun
+echo   gradle :notification-api:bootRun
+echo   gradle :presentation-web:bootRun
+echo.
 
 goto :eof
 
 :: Helper Functions
-:create_classlib
-if not exist "%~dp1" mkdir "%~dp1" 2>nul
-dotnet new classlib -n %~nx1 -o %1 --force > nul 2>&1
+:create_root_gradle
+echo plugins { > build.gradle
+echo     id 'java' >> build.gradle
+echo     id 'org.springframework.boot' version '3.5.4' apply false >> build.gradle
+echo     id 'io.spring.dependency-management' version '1.1.4' apply false >> build.gradle
+echo } >> build.gradle
+echo. >> build.gradle
+echo allprojects { >> build.gradle
+echo     group = '%PACKAGE_NAME%' >> build.gradle
+echo     version = '1.0.0' >> build.gradle
+echo } >> build.gradle
+echo. >> build.gradle
+echo subprojects { >> build.gradle
+echo     apply plugin: 'java' >> build.gradle
+echo. >> build.gradle
+echo     java { >> build.gradle
+echo         toolchain { >> build.gradle
+echo             languageVersion = JavaLanguageVersion.of(21) >> build.gradle
+echo         } >> build.gradle
+echo     } >> build.gradle
+echo. >> build.gradle
+echo     repositories { >> build.gradle
+echo         mavenCentral() >> build.gradle
+echo     } >> build.gradle
+echo. >> build.gradle
+echo     dependencies { >> build.gradle
+echo         testImplementation 'org.springframework.boot:spring-boot-starter-test' >> build.gradle
+echo         testImplementation 'org.junit.jupiter:junit-jupiter' >> build.gradle
+echo         testImplementation 'org.mockito:mockito-core' >> build.gradle
+echo         testImplementation 'org.assertj:assertj-core' >> build.gradle
+echo     } >> build.gradle
+echo. >> build.gradle
+echo     test { >> build.gradle
+echo         useJUnitPlatform() >> build.gradle
+echo     } >> build.gradle
+echo } >> build.gradle
 goto :eof
 
-:create_webapi
-if not exist "%~dp1" mkdir "%~dp1" 2>nul
-dotnet new webapi -n %~nx1 -o %1 --force > nul 2>&1 --use-controllers --use-program-main
+:create_settings_gradle
+echo rootProject.name = '%PROJECT_NAME%' > settings.gradle
+echo. >> settings.gradle
+echo // Shared libraries >> settings.gradle
+echo include 'shared:seedwork' >> settings.gradle
+echo include 'shared:shared-kernel-domain' >> settings.gradle
+echo include 'shared:shared-kernel-application' >> settings.gradle
+echo include 'shared:shared-kernel-infrastructure' >> settings.gradle
+echo include 'shared:security-infrastructure' >> settings.gradle
+echo include 'shared:event-bus' >> settings.gradle
+echo. >> settings.gradle
+echo // Credential bounded context >> settings.gradle
+echo include 'src:credential:credential-domain' >> settings.gradle
+echo include 'src:credential:credential-application' >> settings.gradle
+echo include 'src:credential:credential-infrastructure' >> settings.gradle
+echo include 'src:credential:credential-api' >> settings.gradle
+echo. >> settings.gradle
+echo // Notification bounded context >> settings.gradle
+echo include 'src:notification:notification-domain' >> settings.gradle
+echo include 'src:notification:notification-application' >> settings.gradle
+echo include 'src:notification:notification-infrastructure' >> settings.gradle
+echo include 'src:notification:notification-api' >> settings.gradle
+echo. >> settings.gradle
+echo // Presentation >> settings.gradle
+echo include 'src:presentation:presentation-web' >> settings.gradle
+echo. >> settings.gradle
+echo // Migrations >> settings.gradle
+echo include 'migrations:credential-migrations' >> settings.gradle
+echo include 'migrations:notification-migrations' >> settings.gradle
+echo. >> settings.gradle
+echo // Project directory mapping >> settings.gradle
+echo project(':shared:seedwork').projectDir = file('shared/seedwork') >> settings.gradle
+echo project(':shared:shared-kernel-domain').projectDir = file('shared/shared-kernel-domain') >> settings.gradle
+echo project(':shared:shared-kernel-application').projectDir = file('shared/shared-kernel-application') >> settings.gradle
+echo project(':shared:shared-kernel-infrastructure').projectDir = file('shared/shared-kernel-infrastructure') >> settings.gradle
+echo project(':shared:security-infrastructure').projectDir = file('shared/security-infrastructure') >> settings.gradle
+echo project(':shared:event-bus').projectDir = file('shared/event-bus') >> settings.gradle
+echo project(':src:credential:credential-domain').projectDir = file('src/credential/credential-domain') >> settings.gradle
+echo project(':src:credential:credential-application').projectDir = file('src/credential/credential-application') >> settings.gradle
+echo project(':src:credential:credential-infrastructure').projectDir = file('src/credential/credential-infrastructure') >> settings.gradle
+echo project(':src:credential:credential-api').projectDir = file('src/credential/credential-api') >> settings.gradle
+echo project(':src:notification:notification-domain').projectDir = file('src/notification/notification-domain') >> settings.gradle
+echo project(':src:notification:notification-application').projectDir = file('src/notification/notification-application') >> settings.gradle
+echo project(':src:notification:notification-infrastructure').projectDir = file('src/notification/notification-infrastructure') >> settings.gradle
+echo project(':src:notification:notification-api').projectDir = file('src/notification/notification-api') >> settings.gradle
+echo project(':src:presentation:presentation-web').projectDir = file('src/presentation/presentation-web') >> settings.gradle
+echo project(':migrations:credential-migrations').projectDir = file('migrations/credential-migrations') >> settings.gradle
+echo project(':migrations:notification-migrations').projectDir = file('migrations/notification-migrations') >> settings.gradle
 goto :eof
 
-:create_mvc
-if not exist "%~dp1" mkdir "%~dp1" 2>nul
-dotnet new mvc -n %~nx1 -o %1 --force > nul 2>&1
+:create_java_lib
+if not exist "%1" mkdir "%1" 2>nul
+if not exist "%1\src\main\java" mkdir "%1\src\main\java" 2>nul
+if not exist "%1\src\main\resources" mkdir "%1\src\main\resources" 2>nul
+if not exist "%1\src\test\java" mkdir "%1\src\test\java" 2>nul
+if not exist "%1\src\test\resources" mkdir "%1\src\test\resources" 2>nul
+
+echo dependencies { > "%1\build.gradle"
+echo     implementation 'org.springframework:spring-context' >> "%1\build.gradle"
+echo     implementation 'org.springframework:spring-core' >> "%1\build.gradle"
+echo     implementation 'jakarta.validation:jakarta.validation-api' >> "%1\build.gradle"
+echo     implementation 'org.slf4j:slf4j-api' >> "%1\build.gradle"
+echo } >> "%1\build.gradle"
 goto :eof
 
-:create_test
-if not exist "%~dp1" mkdir "%~dp1" 2>nul
-dotnet new xunit -n %~nx1 -o %1 --force > nul 2>&1
+:create_spring_boot_app
+if not exist "%1" mkdir "%1" 2>nul
+if not exist "%1\src\main\java" mkdir "%1\src\main\java" 2>nul
+if not exist "%1\src\main\resources" mkdir "%1\src\main\resources" 2>nul
+if not exist "%1\src\test\java" mkdir "%1\src\test\java" 2>nul
+if not exist "%1\src\test\resources" mkdir "%1\src\test\resources" 2>nul
+
+echo plugins { > "%1\build.gradle"
+echo     id 'org.springframework.boot' >> "%1\build.gradle"
+echo     id 'io.spring.dependency-management' >> "%1\build.gradle"
+echo } >> "%1\build.gradle"
+echo. >> "%1\build.gradle"
+echo dependencies { >> "%1\build.gradle"
+echo     implementation 'org.springframework.boot:spring-boot-starter-web' >> "%1\build.gradle"
+echo     implementation 'org.springframework.boot:spring-boot-starter-data-jpa' >> "%1\build.gradle"
+echo     implementation 'org.springframework.boot:spring-boot-starter-validation' >> "%1\build.gradle"
+echo     implementation 'org.springframework.boot:spring-boot-starter-actuator' >> "%1\build.gradle"
+echo     implementation 'org.springframework.boot:spring-boot-starter-security' >> "%1\build.gradle"
+echo     implementation 'com.fasterxml.jackson.core:jackson-databind' >> "%1\build.gradle"
+echo     runtimeOnly 'com.h2database:h2' >> "%1\build.gradle"
+echo     runtimeOnly 'org.postgresql:postgresql' >> "%1\build.gradle"
+echo } >> "%1\build.gradle"
+
+:: Create main application class
+set APP_DIR=%1\src\main\java\com\csnp
+if not exist "%APP_DIR%" mkdir "%APP_DIR%" 2>nul
+for %%f in ("%1") do set MODULE_NAME=%%~nxf
+call :create_main_class "%APP_DIR%" "%MODULE_NAME%"
+
+:: Create application.yml
+echo server: > "%1\src\main\resources\application.yml"
+echo   port: 8080 >> "%1\src\main\resources\application.yml"
+echo. >> "%1\src\main\resources\application.yml"
+echo spring: >> "%1\src\main\resources\application.yml"
+echo   application: >> "%1\src\main\resources\application.yml"
+echo     name: %MODULE_NAME% >> "%1\src\main\resources\application.yml"
+echo   datasource: >> "%1\src\main\resources\application.yml"
+echo     url: jdbc:h2:mem:testdb >> "%1\src\main\resources\application.yml"
+echo     driver-class-name: org.h2.Driver >> "%1\src\main\resources\application.yml"
+echo   jpa: >> "%1\src\main\resources\application.yml"
+echo     hibernate: >> "%1\src\main\resources\application.yml"
+echo       ddl-auto: update >> "%1\src\main\resources\application.yml"
+echo     show-sql: true >> "%1\src\main\resources\application.yml"
 goto :eof
 
-:create_subfolder
+:create_main_class
+set JAVA_FILE=%1\Application.java
+echo package com.csnp; > "%JAVA_FILE%"
+echo. >> "%JAVA_FILE%"
+echo import org.springframework.boot.SpringApplication; >> "%JAVA_FILE%"
+echo import org.springframework.boot.autoconfigure.SpringBootApplication; >> "%JAVA_FILE%"
+echo. >> "%JAVA_FILE%"
+echo @SpringBootApplication >> "%JAVA_FILE%"
+echo public class Application { >> "%JAVA_FILE%"
+echo     public static void main(String[] args) { >> "%JAVA_FILE%"
+echo         SpringApplication.run(Application.class, args); >> "%JAVA_FILE%"
+echo     } >> "%JAVA_FILE%"
+echo } >> "%JAVA_FILE%"
+goto :eof
+
+:create_package_structure
+set FULL_PATH=%~1
+set PACKAGE_PATH=%~2
+if not exist "%FULL_PATH%" mkdir "%FULL_PATH%" 2>nul
+if not exist "%FULL_PATH%\%PACKAGE_PATH%" mkdir "%FULL_PATH%\%PACKAGE_PATH%" 2>nul
+echo. > "%FULL_PATH%\%PACKAGE_PATH%\.gitkeep"
+goto :eof
+
+:create_test_project
 if not exist "%1" mkdir "%1" 2>nul
 echo. > "%1\.gitkeep"
+goto :eof
+
+:setup_project_dependencies
+echo Setting up project dependencies...
+
+:: SharedKernel layer dependencies
+echo dependencies { >> "%SHARED_DIR%\shared-kernel-domain\build.gradle"
+echo     implementation project(':shared:seedwork') >> "%SHARED_DIR%\shared-kernel-domain\build.gradle"
+echo } >> "%SHARED_DIR%\shared-kernel-domain\build.gradle"
+
+echo dependencies { >> "%SHARED_DIR%\shared-kernel-application\build.gradle"
+echo     implementation project(':shared:shared-kernel-domain') >> "%SHARED_DIR%\shared-kernel-application\build.gradle"
+echo } >> "%SHARED_DIR%\shared-kernel-application\build.gradle"
+
+echo dependencies { >> "%SHARED_DIR%\shared-kernel-infrastructure\build.gradle"
+echo     implementation project(':shared:shared-kernel-application') >> "%SHARED_DIR%\shared-kernel-infrastructure\build.gradle"
+echo } >> "%SHARED_DIR%\shared-kernel-infrastructure\build.gradle"
+
+:: Credential bounded context references
+echo dependencies { >> "%SRC_DIR%\credential\credential-api\build.gradle"
+echo     implementation project(':src:credential:credential-infrastructure') >> "%SRC_DIR%\credential\credential-api\build.gradle"
+echo } >> "%SRC_DIR%\credential\credential-api\build.gradle"
+
+echo dependencies { >> "%SRC_DIR%\credential\credential-application\build.gradle"
+echo     implementation project(':src:credential:credential-domain') >> "%SRC_DIR%\credential\credential-application\build.gradle"
+echo     implementation project(':shared:shared-kernel-application') >> "%SRC_DIR%\credential\credential-application\build.gradle"
+echo     implementation project(':shared:event-bus') >> "%SRC_DIR%\credential\credential-application\build.gradle"
+echo } >> "%SRC_DIR%\credential\credential-application\build.gradle"
+
+echo dependencies { >> "%SRC_DIR%\credential\credential-domain\build.gradle"
+echo     implementation project(':shared:shared-kernel-domain') >> "%SRC_DIR%\credential\credential-domain\build.gradle"
+echo } >> "%SRC_DIR%\credential\credential-domain\build.gradle"
+
+echo dependencies { >> "%SRC_DIR%\credential\credential-infrastructure\build.gradle"
+echo     implementation project(':src:credential:credential-application') >> "%SRC_DIR%\credential\credential-infrastructure\build.gradle"
+echo } >> "%SRC_DIR%\credential\credential-infrastructure\build.gradle"
+
+:: Notification bounded context references
+echo dependencies { >> "%SRC_DIR%\notification\notification-api\build.gradle"
+echo     implementation project(':src:notification:notification-infrastructure') >> "%SRC_DIR%\notification\notification-api\build.gradle"
+echo } >> "%SRC_DIR%\notification\notification-api\build.gradle"
+
+echo dependencies { >> "%SRC_DIR%\notification\notification-application\build.gradle"
+echo     implementation project(':src:notification:notification-domain') >> "%SRC_DIR%\notification\notification-application\build.gradle"
+echo     implementation project(':shared:shared-kernel-application') >> "%SRC_DIR%\notification\notification-application\build.gradle"
+echo     implementation project(':shared:event-bus') >> "%SRC_DIR%\notification\notification-application\build.gradle"
+echo } >> "%SRC_DIR%\notification\notification-application\build.gradle"
+
+echo dependencies { >> "%SRC_DIR%\notification\notification-domain\build.gradle"
+echo     implementation project(':shared:shared-kernel-domain') >> "%SRC_DIR%\notification\notification-domain\build.gradle"
+echo } >> "%SRC_DIR%\notification\notification-domain\build.gradle"
+
+echo dependencies { >> "%SRC_DIR%\notification\notification-infrastructure\build.gradle"
+echo     implementation project(':src:notification:notification-application') >> "%SRC_DIR%\notification\notification-infrastructure\build.gradle"
+echo } >> "%SRC_DIR%\notification\notification-infrastructure\build.gradle"
+
+:: Presentation references
+echo dependencies { >> "%SRC_DIR%\presentation\presentation-web\build.gradle"
+echo     implementation project(':shared:security-infrastructure') >> "%SRC_DIR%\presentation\presentation-web\build.gradle"
+echo } >> "%SRC_DIR%\presentation\presentation-web\build.gradle"
+
+:: Migration projects references
+echo dependencies { >> "%MIGRATIONS_DIR%\credential-migrations\build.gradle"
+echo     implementation project(':src:credential:credential-infrastructure') >> "%MIGRATIONS_DIR%\credential-migrations\build.gradle"
+echo } >> "%MIGRATIONS_DIR%\credential-migrations\build.gradle"
+
+echo dependencies { >> "%MIGRATIONS_DIR%\notification-migrations\build.gradle"
+echo     implementation project(':src:notification:notification-infrastructure') >> "%MIGRATIONS_DIR%\notification-migrations\build.gradle"
+echo } >> "%MIGRATIONS_DIR%\notification-migrations\build.gradle"
+
+goto :eof
+
+:create_gitignore
+echo # Gradle > .gitignore
+echo .gradle/ >> .gitignore
+echo build/ >> .gitignore
+echo gradle-app.setting >> .gitignore
+echo !gradle-wrapper.jar >> .gitignore
+echo !gradle-wrapper.properties >> .gitignore
+echo. >> .gitignore
+echo # IDE >> .gitignore
+echo .idea/ >> .gitignore
+echo *.iml >> .gitignore
+echo *.ipr >> .gitignore
+echo *.iws >> .gitignore
+echo .vscode/ >> .gitignore
+echo. >> .gitignore
+echo # Eclipse >> .gitignore
+echo .eclipse >> .gitignore
+echo .metadata >> .gitignore
+echo bin/ >> .gitignore
+echo tmp/ >> .gitignore
+echo *.tmp >> .gitignore
+echo *.bak >> .gitignore
+echo *.swp >> .gitignore
+echo *~.nib >> .gitignore
+echo local.properties >> .gitignore
+echo .settings/ >> .gitignore
+echo .loadpath >> .gitignore
+echo .recommenders >> .gitignore
+echo .project >> .gitignore
+echo .classpath >> .gitignore
+echo. >> .gitignore
+echo # Java >> .gitignore
+echo *.class >> .gitignore
+echo *.log >> .gitignore
+echo *.ctxt >> .gitignore
+echo .mtj.tmp/ >> .gitignore
+echo hs_err_pid* >> .gitignore
+echo replay_pid* >> .gitignore
+echo. >> .gitignore
+echo # Spring Boot >> .gitignore
+echo target/ >> .gitignore
+echo !.mvn/wrapper/maven-wrapper.jar >> .gitignore
+echo !**/src/main/**/target/ >> .gitignore
+echo !**/src/test/**/target/ >> .gitignore
+echo. >> .gitignore
+echo # OS >> .gitignore
+echo .DS_Store >> .gitignore
+echo .DS_Store? >> .gitignore
+echo ._* >> .gitignore
+echo .Spotlight-V100 >> .gitignore
+echo .Trashes >> .gitignore
+echo ehthumbs.db >> .gitignore
+echo Thumbs.db >> .gitignore
+echo. >> .gitignore
+echo # Application specific >> .gitignore
+echo logs/ >> .gitignore
+echo application-local.yml >> .gitignore
+echo application-local.properties >> .gitignore
+echo /out/ >> .gitignore
 goto :eof
