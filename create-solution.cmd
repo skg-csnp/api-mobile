@@ -152,90 +152,90 @@ goto :eof
 :: Helper Functions
 :create_root_gradle
 echo plugins { > build.gradle
-echo     id 'java' >> build.gradle
-echo     id 'org.springframework.boot' version '3.5.4' apply false >> build.gradle
-echo     id 'io.spring.dependency-management' version '1.1.4' apply false >> build.gradle
-echo } >> build.gradle
-echo. >> build.gradle
-echo allprojects { >> build.gradle
-echo     group = '%PACKAGE_NAME%' >> build.gradle
-echo     version = '1.0.0' >> build.gradle
-echo } >> build.gradle
-echo. >> build.gradle
-echo subprojects { >> build.gradle
-echo     apply plugin: 'java' >> build.gradle
-echo. >> build.gradle
-echo     java { >> build.gradle
-echo         toolchain { >> build.gradle
-echo             languageVersion = JavaLanguageVersion.of(21) >> build.gradle
-echo         } >> build.gradle
-echo     } >> build.gradle
-echo. >> build.gradle
-echo     repositories { >> build.gradle
-echo         mavenCentral() >> build.gradle
-echo     } >> build.gradle
-echo. >> build.gradle
-echo     dependencies { >> build.gradle
-echo         testImplementation 'org.springframework.boot:spring-boot-starter-test' >> build.gradle
-echo         testImplementation 'org.junit.jupiter:junit-jupiter' >> build.gradle
-echo         testImplementation 'org.mockito:mockito-core' >> build.gradle
-echo         testImplementation 'org.assertj:assertj-core' >> build.gradle
-echo     } >> build.gradle
-echo. >> build.gradle
-echo     test { >> build.gradle
-echo         useJUnitPlatform() >> build.gradle
-echo     } >> build.gradle
-echo } >> build.gradle
+echo     id 'java'>> build.gradle
+echo     id 'org.springframework.boot' version '3.5.4' apply false>> build.gradle
+echo     id 'io.spring.dependency-management' version '1.1.4' apply false>> build.gradle
+echo }>> build.gradle
+echo.>> build.gradle
+echo allprojects {>> build.gradle
+echo     group = '%PACKAGE_NAME%'>> build.gradle
+echo     version = '1.0.0'>> build.gradle
+echo }>> build.gradle
+echo.>> build.gradle
+echo subprojects {>> build.gradle
+echo     apply plugin: 'java'>> build.gradle
+echo.>> build.gradle
+echo     java {>> build.gradle
+echo         toolchain {>> build.gradle
+echo             languageVersion = JavaLanguageVersion.of(21)>> build.gradle
+echo         }>> build.gradle
+echo     }>> build.gradle
+echo.>> build.gradle
+echo     repositories {>> build.gradle
+echo         mavenCentral()>> build.gradle
+echo     }>> build.gradle
+echo.>> build.gradle
+echo     dependencies {>> build.gradle
+echo         testImplementation 'org.springframework.boot:spring-boot-starter-test'>> build.gradle
+echo         testImplementation 'org.junit.jupiter:junit-jupiter'>> build.gradle
+echo         testImplementation 'org.mockito:mockito-core'>> build.gradle
+echo         testImplementation 'org.assertj:assertj-core'>> build.gradle
+echo     }>> build.gradle
+echo.>> build.gradle
+echo     test {>> build.gradle
+echo         useJUnitPlatform()>> build.gradle
+echo     }>> build.gradle
+echo }>> build.gradle
 goto :eof
 
 :create_settings_gradle
 echo rootProject.name = '%PROJECT_NAME%' > settings.gradle
-echo. >> settings.gradle
-echo // Shared libraries >> settings.gradle
-echo include 'shared:seedwork' >> settings.gradle
-echo include 'shared:shared-kernel-domain' >> settings.gradle
-echo include 'shared:shared-kernel-application' >> settings.gradle
-echo include 'shared:shared-kernel-infrastructure' >> settings.gradle
-echo include 'shared:security-infrastructure' >> settings.gradle
-echo include 'shared:event-bus' >> settings.gradle
-echo. >> settings.gradle
-echo // Credential bounded context >> settings.gradle
-echo include 'src:credential:credential-domain' >> settings.gradle
-echo include 'src:credential:credential-application' >> settings.gradle
-echo include 'src:credential:credential-infrastructure' >> settings.gradle
-echo include 'src:credential:credential-api' >> settings.gradle
-echo. >> settings.gradle
-echo // Notification bounded context >> settings.gradle
-echo include 'src:notification:notification-domain' >> settings.gradle
-echo include 'src:notification:notification-application' >> settings.gradle
-echo include 'src:notification:notification-infrastructure' >> settings.gradle
-echo include 'src:notification:notification-api' >> settings.gradle
-echo. >> settings.gradle
-echo // Presentation >> settings.gradle
-echo include 'src:presentation:presentation-web' >> settings.gradle
-echo. >> settings.gradle
-echo // Migrations >> settings.gradle
-echo include 'migrations:credential-migrations' >> settings.gradle
-echo include 'migrations:notification-migrations' >> settings.gradle
-echo. >> settings.gradle
-echo // Project directory mapping >> settings.gradle
-echo project(':shared:seedwork').projectDir = file('shared/seedwork') >> settings.gradle
-echo project(':shared:shared-kernel-domain').projectDir = file('shared/shared-kernel-domain') >> settings.gradle
-echo project(':shared:shared-kernel-application').projectDir = file('shared/shared-kernel-application') >> settings.gradle
-echo project(':shared:shared-kernel-infrastructure').projectDir = file('shared/shared-kernel-infrastructure') >> settings.gradle
-echo project(':shared:security-infrastructure').projectDir = file('shared/security-infrastructure') >> settings.gradle
-echo project(':shared:event-bus').projectDir = file('shared/event-bus') >> settings.gradle
-echo project(':src:credential:credential-domain').projectDir = file('src/credential/credential-domain') >> settings.gradle
-echo project(':src:credential:credential-application').projectDir = file('src/credential/credential-application') >> settings.gradle
-echo project(':src:credential:credential-infrastructure').projectDir = file('src/credential/credential-infrastructure') >> settings.gradle
-echo project(':src:credential:credential-api').projectDir = file('src/credential/credential-api') >> settings.gradle
-echo project(':src:notification:notification-domain').projectDir = file('src/notification/notification-domain') >> settings.gradle
-echo project(':src:notification:notification-application').projectDir = file('src/notification/notification-application') >> settings.gradle
-echo project(':src:notification:notification-infrastructure').projectDir = file('src/notification/notification-infrastructure') >> settings.gradle
-echo project(':src:notification:notification-api').projectDir = file('src/notification/notification-api') >> settings.gradle
-echo project(':src:presentation:presentation-web').projectDir = file('src/presentation/presentation-web') >> settings.gradle
-echo project(':migrations:credential-migrations').projectDir = file('migrations/credential-migrations') >> settings.gradle
-echo project(':migrations:notification-migrations').projectDir = file('migrations/notification-migrations') >> settings.gradle
+echo.>> settings.gradle
+echo // Shared libraries>> settings.gradle
+echo include 'shared:seedwork'>> settings.gradle
+echo include 'shared:shared-kernel-domain'>> settings.gradle
+echo include 'shared:shared-kernel-application'>> settings.gradle
+echo include 'shared:shared-kernel-infrastructure'>> settings.gradle
+echo include 'shared:security-infrastructure'>> settings.gradle
+echo include 'shared:event-bus'>> settings.gradle
+echo.>> settings.gradle
+echo // Credential bounded context>> settings.gradle
+echo include 'src:credential:credential-domain'>> settings.gradle
+echo include 'src:credential:credential-application'>> settings.gradle
+echo include 'src:credential:credential-infrastructure'>> settings.gradle
+echo include 'src:credential:credential-api'>> settings.gradle
+echo.>> settings.gradle
+echo // Notification bounded context>> settings.gradle
+echo include 'src:notification:notification-domain'>> settings.gradle
+echo include 'src:notification:notification-application'>> settings.gradle
+echo include 'src:notification:notification-infrastructure'>> settings.gradle
+echo include 'src:notification:notification-api'>> settings.gradle
+echo.>> settings.gradle
+echo // Presentation>> settings.gradle
+echo include 'src:presentation:presentation-web'>> settings.gradle
+echo.>> settings.gradle
+echo // Migrations>> settings.gradle
+echo include 'migrations:credential-migrations'>> settings.gradle
+echo include 'migrations:notification-migrations'>> settings.gradle
+echo.>> settings.gradle
+echo // Project directory mapping>> settings.gradle
+echo project(':shared:seedwork').projectDir = file('shared/seedwork')>> settings.gradle
+echo project(':shared:shared-kernel-domain').projectDir = file('shared/shared-kernel-domain')>> settings.gradle
+echo project(':shared:shared-kernel-application').projectDir = file('shared/shared-kernel-application')>> settings.gradle
+echo project(':shared:shared-kernel-infrastructure').projectDir = file('shared/shared-kernel-infrastructure')>> settings.gradle
+echo project(':shared:security-infrastructure').projectDir = file('shared/security-infrastructure')>> settings.gradle
+echo project(':shared:event-bus').projectDir = file('shared/event-bus')>> settings.gradle
+echo project(':src:credential:credential-domain').projectDir = file('src/credential/credential-domain')>> settings.gradle
+echo project(':src:credential:credential-application').projectDir = file('src/credential/credential-application')>> settings.gradle
+echo project(':src:credential:credential-infrastructure').projectDir = file('src/credential/credential-infrastructure')>> settings.gradle
+echo project(':src:credential:credential-api').projectDir = file('src/credential/credential-api')>> settings.gradle
+echo project(':src:notification:notification-domain').projectDir = file('src/notification/notification-domain')>> settings.gradle
+echo project(':src:notification:notification-application').projectDir = file('src/notification/notification-application')>> settings.gradle
+echo project(':src:notification:notification-infrastructure').projectDir = file('src/notification/notification-infrastructure')>> settings.gradle
+echo project(':src:notification:notification-api').projectDir = file('src/notification/notification-api')>> settings.gradle
+echo project(':src:presentation:presentation-web').projectDir = file('src/presentation/presentation-web')>> settings.gradle
+echo project(':migrations:credential-migrations').projectDir = file('migrations/credential-migrations')>> settings.gradle
+echo project(':migrations:notification-migrations').projectDir = file('migrations/notification-migrations')>> settings.gradle
 goto :eof
 
 :create_java_lib
@@ -246,11 +246,11 @@ if not exist "%1\src\test\java" mkdir "%1\src\test\java" 2>nul
 if not exist "%1\src\test\resources" mkdir "%1\src\test\resources" 2>nul
 
 echo dependencies { > "%1\build.gradle"
-echo     implementation 'org.springframework:spring-context' >> "%1\build.gradle"
-echo     implementation 'org.springframework:spring-core' >> "%1\build.gradle"
-echo     implementation 'jakarta.validation:jakarta.validation-api' >> "%1\build.gradle"
-echo     implementation 'org.slf4j:slf4j-api' >> "%1\build.gradle"
-echo } >> "%1\build.gradle"
+echo     implementation 'org.springframework:spring-context'>> "%1\build.gradle"
+echo     implementation 'org.springframework:spring-core'>> "%1\build.gradle"
+echo     implementation 'jakarta.validation:jakarta.validation-api'>> "%1\build.gradle"
+echo     implementation 'org.slf4j:slf4j-api'>> "%1\build.gradle"
+echo }>> "%1\build.gradle"
 goto :eof
 
 :create_spring_boot_app
@@ -261,20 +261,20 @@ if not exist "%1\src\test\java" mkdir "%1\src\test\java" 2>nul
 if not exist "%1\src\test\resources" mkdir "%1\src\test\resources" 2>nul
 
 echo plugins { > "%1\build.gradle"
-echo     id 'org.springframework.boot' >> "%1\build.gradle"
-echo     id 'io.spring.dependency-management' >> "%1\build.gradle"
-echo } >> "%1\build.gradle"
-echo. >> "%1\build.gradle"
-echo dependencies { >> "%1\build.gradle"
-echo     implementation 'org.springframework.boot:spring-boot-starter-web' >> "%1\build.gradle"
-echo     implementation 'org.springframework.boot:spring-boot-starter-data-jpa' >> "%1\build.gradle"
-echo     implementation 'org.springframework.boot:spring-boot-starter-validation' >> "%1\build.gradle"
-echo     implementation 'org.springframework.boot:spring-boot-starter-actuator' >> "%1\build.gradle"
-echo     implementation 'org.springframework.boot:spring-boot-starter-security' >> "%1\build.gradle"
-echo     implementation 'com.fasterxml.jackson.core:jackson-databind' >> "%1\build.gradle"
-echo     runtimeOnly 'com.h2database:h2' >> "%1\build.gradle"
-echo     runtimeOnly 'org.postgresql:postgresql' >> "%1\build.gradle"
-echo } >> "%1\build.gradle"
+echo     id 'org.springframework.boot'>> "%1\build.gradle"
+echo     id 'io.spring.dependency-management'>> "%1\build.gradle"
+echo }>> "%1\build.gradle"
+echo.>> "%1\build.gradle"
+echo dependencies {>> "%1\build.gradle"
+echo     implementation 'org.springframework.boot:spring-boot-starter-web'>> "%1\build.gradle"
+echo     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'>> "%1\build.gradle"
+echo     implementation 'org.springframework.boot:spring-boot-starter-validation'>> "%1\build.gradle"
+echo     implementation 'org.springframework.boot:spring-boot-starter-actuator'>> "%1\build.gradle"
+echo     implementation 'org.springframework.boot:spring-boot-starter-security'>> "%1\build.gradle"
+echo     implementation 'com.fasterxml.jackson.core:jackson-databind'>> "%1\build.gradle"
+echo     runtimeOnly 'com.h2database:h2'>> "%1\build.gradle"
+echo     runtimeOnly 'org.postgresql:postgresql'>> "%1\build.gradle"
+echo }>> "%1\build.gradle"
 
 :: Create main application class
 set APP_DIR=%1\src\main\java\com\csnp
@@ -284,33 +284,33 @@ call :create_main_class "%APP_DIR%" "%MODULE_NAME%"
 
 :: Create application.yml
 echo server: > "%1\src\main\resources\application.yml"
-echo   port: 8080 >> "%1\src\main\resources\application.yml"
-echo. >> "%1\src\main\resources\application.yml"
-echo spring: >> "%1\src\main\resources\application.yml"
-echo   application: >> "%1\src\main\resources\application.yml"
-echo     name: %MODULE_NAME% >> "%1\src\main\resources\application.yml"
-echo   datasource: >> "%1\src\main\resources\application.yml"
-echo     url: jdbc:h2:mem:testdb >> "%1\src\main\resources\application.yml"
-echo     driver-class-name: org.h2.Driver >> "%1\src\main\resources\application.yml"
-echo   jpa: >> "%1\src\main\resources\application.yml"
-echo     hibernate: >> "%1\src\main\resources\application.yml"
-echo       ddl-auto: update >> "%1\src\main\resources\application.yml"
-echo     show-sql: true >> "%1\src\main\resources\application.yml"
+echo   port: 8081>> "%1\src\main\resources\application.yml"
+echo.>> "%1\src\main\resources\application.yml"
+echo spring:>> "%1\src\main\resources\application.yml"
+echo   application:>> "%1\src\main\resources\application.yml"
+echo     name: %MODULE_NAME%>> "%1\src\main\resources\application.yml"
+echo   datasource:>> "%1\src\main\resources\application.yml"
+echo     url: jdbc:h2:mem:testdb>> "%1\src\main\resources\application.yml"
+echo     driver-class-name: org.h2.Driver>> "%1\src\main\resources\application.yml"
+echo   jpa:>> "%1\src\main\resources\application.yml"
+echo     hibernate:>> "%1\src\main\resources\application.yml"
+echo       ddl-auto: update>> "%1\src\main\resources\application.yml"
+echo     show-sql: true>> "%1\src\main\resources\application.yml"
 goto :eof
 
 :create_main_class
 set JAVA_FILE=%1\Application.java
 echo package com.csnp; > "%JAVA_FILE%"
-echo. >> "%JAVA_FILE%"
-echo import org.springframework.boot.SpringApplication; >> "%JAVA_FILE%"
-echo import org.springframework.boot.autoconfigure.SpringBootApplication; >> "%JAVA_FILE%"
-echo. >> "%JAVA_FILE%"
-echo @SpringBootApplication >> "%JAVA_FILE%"
-echo public class Application { >> "%JAVA_FILE%"
-echo     public static void main(String[] args) { >> "%JAVA_FILE%"
-echo         SpringApplication.run(Application.class, args); >> "%JAVA_FILE%"
-echo     } >> "%JAVA_FILE%"
-echo } >> "%JAVA_FILE%"
+echo.>> "%JAVA_FILE%"
+echo import org.springframework.boot.SpringApplication;>> "%JAVA_FILE%"
+echo import org.springframework.boot.autoconfigure.SpringBootApplication;>> "%JAVA_FILE%"
+echo.>> "%JAVA_FILE%"
+echo @SpringBootApplication>> "%JAVA_FILE%"
+echo public class Application {>> "%JAVA_FILE%"
+echo     public static void main(String[] args) {>> "%JAVA_FILE%"
+echo         SpringApplication.run(Application.class, args);>> "%JAVA_FILE%"
+echo     }>> "%JAVA_FILE%"
+echo }>> "%JAVA_FILE%"
 goto :eof
 
 :create_package_structure
@@ -330,129 +330,129 @@ goto :eof
 echo Setting up project dependencies...
 
 :: SharedKernel layer dependencies
-echo dependencies { >> "%SHARED_DIR%\shared-kernel-domain\build.gradle"
-echo     implementation project(':shared:seedwork') >> "%SHARED_DIR%\shared-kernel-domain\build.gradle"
-echo } >> "%SHARED_DIR%\shared-kernel-domain\build.gradle"
+echo dependencies {>> "%SHARED_DIR%\shared-kernel-domain\build.gradle"
+echo     implementation project(':shared:seedwork')>> "%SHARED_DIR%\shared-kernel-domain\build.gradle"
+echo }>> "%SHARED_DIR%\shared-kernel-domain\build.gradle"
 
-echo dependencies { >> "%SHARED_DIR%\shared-kernel-application\build.gradle"
-echo     implementation project(':shared:shared-kernel-domain') >> "%SHARED_DIR%\shared-kernel-application\build.gradle"
-echo } >> "%SHARED_DIR%\shared-kernel-application\build.gradle"
+echo dependencies {>> "%SHARED_DIR%\shared-kernel-application\build.gradle"
+echo     implementation project(':shared:shared-kernel-domain')>> "%SHARED_DIR%\shared-kernel-application\build.gradle"
+echo }>> "%SHARED_DIR%\shared-kernel-application\build.gradle"
 
-echo dependencies { >> "%SHARED_DIR%\shared-kernel-infrastructure\build.gradle"
-echo     implementation project(':shared:shared-kernel-application') >> "%SHARED_DIR%\shared-kernel-infrastructure\build.gradle"
-echo } >> "%SHARED_DIR%\shared-kernel-infrastructure\build.gradle"
+echo dependencies {>> "%SHARED_DIR%\shared-kernel-infrastructure\build.gradle"
+echo     implementation project(':shared:shared-kernel-application')>> "%SHARED_DIR%\shared-kernel-infrastructure\build.gradle"
+echo }>> "%SHARED_DIR%\shared-kernel-infrastructure\build.gradle"
 
 :: Credential bounded context references
-echo dependencies { >> "%SRC_DIR%\credential\credential-api\build.gradle"
-echo     implementation project(':src:credential:credential-infrastructure') >> "%SRC_DIR%\credential\credential-api\build.gradle"
-echo } >> "%SRC_DIR%\credential\credential-api\build.gradle"
+echo dependencies {>> "%SRC_DIR%\credential\credential-api\build.gradle"
+echo     implementation project(':src:credential:credential-infrastructure')>> "%SRC_DIR%\credential\credential-api\build.gradle"
+echo }>> "%SRC_DIR%\credential\credential-api\build.gradle"
 
-echo dependencies { >> "%SRC_DIR%\credential\credential-application\build.gradle"
-echo     implementation project(':src:credential:credential-domain') >> "%SRC_DIR%\credential\credential-application\build.gradle"
-echo     implementation project(':shared:shared-kernel-application') >> "%SRC_DIR%\credential\credential-application\build.gradle"
-echo     implementation project(':shared:event-bus') >> "%SRC_DIR%\credential\credential-application\build.gradle"
-echo } >> "%SRC_DIR%\credential\credential-application\build.gradle"
+echo dependencies {>> "%SRC_DIR%\credential\credential-application\build.gradle"
+echo     implementation project(':src:credential:credential-domain')>> "%SRC_DIR%\credential\credential-application\build.gradle"
+echo     implementation project(':shared:shared-kernel-application')>> "%SRC_DIR%\credential\credential-application\build.gradle"
+echo     implementation project(':shared:event-bus')>> "%SRC_DIR%\credential\credential-application\build.gradle"
+echo }>> "%SRC_DIR%\credential\credential-application\build.gradle"
 
-echo dependencies { >> "%SRC_DIR%\credential\credential-domain\build.gradle"
-echo     implementation project(':shared:shared-kernel-domain') >> "%SRC_DIR%\credential\credential-domain\build.gradle"
-echo } >> "%SRC_DIR%\credential\credential-domain\build.gradle"
+echo dependencies {>> "%SRC_DIR%\credential\credential-domain\build.gradle"
+echo     implementation project(':shared:shared-kernel-domain')>> "%SRC_DIR%\credential\credential-domain\build.gradle"
+echo }>> "%SRC_DIR%\credential\credential-domain\build.gradle"
 
-echo dependencies { >> "%SRC_DIR%\credential\credential-infrastructure\build.gradle"
-echo     implementation project(':src:credential:credential-application') >> "%SRC_DIR%\credential\credential-infrastructure\build.gradle"
-echo } >> "%SRC_DIR%\credential\credential-infrastructure\build.gradle"
+echo dependencies {>> "%SRC_DIR%\credential\credential-infrastructure\build.gradle"
+echo     implementation project(':src:credential:credential-application')>> "%SRC_DIR%\credential\credential-infrastructure\build.gradle"
+echo }>> "%SRC_DIR%\credential\credential-infrastructure\build.gradle"
 
 :: Notification bounded context references
-echo dependencies { >> "%SRC_DIR%\notification\notification-api\build.gradle"
-echo     implementation project(':src:notification:notification-infrastructure') >> "%SRC_DIR%\notification\notification-api\build.gradle"
-echo } >> "%SRC_DIR%\notification\notification-api\build.gradle"
+echo dependencies {>> "%SRC_DIR%\notification\notification-api\build.gradle"
+echo     implementation project(':src:notification:notification-infrastructure')>> "%SRC_DIR%\notification\notification-api\build.gradle"
+echo }>> "%SRC_DIR%\notification\notification-api\build.gradle"
 
-echo dependencies { >> "%SRC_DIR%\notification\notification-application\build.gradle"
-echo     implementation project(':src:notification:notification-domain') >> "%SRC_DIR%\notification\notification-application\build.gradle"
-echo     implementation project(':shared:shared-kernel-application') >> "%SRC_DIR%\notification\notification-application\build.gradle"
-echo     implementation project(':shared:event-bus') >> "%SRC_DIR%\notification\notification-application\build.gradle"
-echo } >> "%SRC_DIR%\notification\notification-application\build.gradle"
+echo dependencies {>> "%SRC_DIR%\notification\notification-application\build.gradle"
+echo     implementation project(':src:notification:notification-domain')>> "%SRC_DIR%\notification\notification-application\build.gradle"
+echo     implementation project(':shared:shared-kernel-application')>> "%SRC_DIR%\notification\notification-application\build.gradle"
+echo     implementation project(':shared:event-bus')>> "%SRC_DIR%\notification\notification-application\build.gradle"
+echo }>> "%SRC_DIR%\notification\notification-application\build.gradle"
 
-echo dependencies { >> "%SRC_DIR%\notification\notification-domain\build.gradle"
-echo     implementation project(':shared:shared-kernel-domain') >> "%SRC_DIR%\notification\notification-domain\build.gradle"
-echo } >> "%SRC_DIR%\notification\notification-domain\build.gradle"
+echo dependencies {>> "%SRC_DIR%\notification\notification-domain\build.gradle"
+echo     implementation project(':shared:shared-kernel-domain')>> "%SRC_DIR%\notification\notification-domain\build.gradle"
+echo }>> "%SRC_DIR%\notification\notification-domain\build.gradle"
 
-echo dependencies { >> "%SRC_DIR%\notification\notification-infrastructure\build.gradle"
-echo     implementation project(':src:notification:notification-application') >> "%SRC_DIR%\notification\notification-infrastructure\build.gradle"
-echo } >> "%SRC_DIR%\notification\notification-infrastructure\build.gradle"
+echo dependencies {>> "%SRC_DIR%\notification\notification-infrastructure\build.gradle"
+echo     implementation project(':src:notification:notification-application')>> "%SRC_DIR%\notification\notification-infrastructure\build.gradle"
+echo }>> "%SRC_DIR%\notification\notification-infrastructure\build.gradle"
 
 :: Presentation references
-echo dependencies { >> "%SRC_DIR%\presentation\presentation-web\build.gradle"
-echo     implementation project(':shared:security-infrastructure') >> "%SRC_DIR%\presentation\presentation-web\build.gradle"
-echo } >> "%SRC_DIR%\presentation\presentation-web\build.gradle"
+echo dependencies {>> "%SRC_DIR%\presentation\presentation-web\build.gradle"
+echo     implementation project(':shared:security-infrastructure')>> "%SRC_DIR%\presentation\presentation-web\build.gradle"
+echo }>> "%SRC_DIR%\presentation\presentation-web\build.gradle"
 
 :: Migration projects references
-echo dependencies { >> "%MIGRATIONS_DIR%\credential-migrations\build.gradle"
-echo     implementation project(':src:credential:credential-infrastructure') >> "%MIGRATIONS_DIR%\credential-migrations\build.gradle"
-echo } >> "%MIGRATIONS_DIR%\credential-migrations\build.gradle"
+echo dependencies {>> "%MIGRATIONS_DIR%\credential-migrations\build.gradle"
+echo     implementation project(':src:credential:credential-infrastructure')>> "%MIGRATIONS_DIR%\credential-migrations\build.gradle"
+echo }>> "%MIGRATIONS_DIR%\credential-migrations\build.gradle"
 
-echo dependencies { >> "%MIGRATIONS_DIR%\notification-migrations\build.gradle"
-echo     implementation project(':src:notification:notification-infrastructure') >> "%MIGRATIONS_DIR%\notification-migrations\build.gradle"
-echo } >> "%MIGRATIONS_DIR%\notification-migrations\build.gradle"
+echo dependencies {>> "%MIGRATIONS_DIR%\notification-migrations\build.gradle"
+echo     implementation project(':src:notification:notification-infrastructure')>> "%MIGRATIONS_DIR%\notification-migrations\build.gradle"
+echo }>> "%MIGRATIONS_DIR%\notification-migrations\build.gradle"
 
 goto :eof
 
 :create_gitignore
 echo # Gradle > .gitignore
-echo .gradle/ >> .gitignore
-echo build/ >> .gitignore
-echo gradle-app.setting >> .gitignore
-echo !gradle-wrapper.jar >> .gitignore
-echo !gradle-wrapper.properties >> .gitignore
-echo. >> .gitignore
-echo # IDE >> .gitignore
-echo .idea/ >> .gitignore
-echo *.iml >> .gitignore
-echo *.ipr >> .gitignore
-echo *.iws >> .gitignore
-echo .vscode/ >> .gitignore
-echo. >> .gitignore
-echo # Eclipse >> .gitignore
-echo .eclipse >> .gitignore
-echo .metadata >> .gitignore
-echo bin/ >> .gitignore
-echo tmp/ >> .gitignore
-echo *.tmp >> .gitignore
-echo *.bak >> .gitignore
-echo *.swp >> .gitignore
-echo *~.nib >> .gitignore
-echo local.properties >> .gitignore
-echo .settings/ >> .gitignore
-echo .loadpath >> .gitignore
-echo .recommenders >> .gitignore
-echo .project >> .gitignore
-echo .classpath >> .gitignore
-echo. >> .gitignore
-echo # Java >> .gitignore
-echo *.class >> .gitignore
-echo *.log >> .gitignore
-echo *.ctxt >> .gitignore
-echo .mtj.tmp/ >> .gitignore
-echo hs_err_pid* >> .gitignore
-echo replay_pid* >> .gitignore
-echo. >> .gitignore
-echo # Spring Boot >> .gitignore
-echo target/ >> .gitignore
-echo !.mvn/wrapper/maven-wrapper.jar >> .gitignore
-echo !**/src/main/**/target/ >> .gitignore
-echo !**/src/test/**/target/ >> .gitignore
-echo. >> .gitignore
-echo # OS >> .gitignore
-echo .DS_Store >> .gitignore
-echo .DS_Store? >> .gitignore
-echo ._* >> .gitignore
-echo .Spotlight-V100 >> .gitignore
-echo .Trashes >> .gitignore
-echo ehthumbs.db >> .gitignore
-echo Thumbs.db >> .gitignore
-echo. >> .gitignore
-echo # Application specific >> .gitignore
-echo logs/ >> .gitignore
-echo application-local.yml >> .gitignore
-echo application-local.properties >> .gitignore
-echo /out/ >> .gitignore
+echo .gradle/>> .gitignore
+echo build/>> .gitignore
+echo gradle-app.setting>> .gitignore
+echo !gradle-wrapper.jar>> .gitignore
+echo !gradle-wrapper.properties>> .gitignore
+echo.>> .gitignore
+echo # IDE>> .gitignore
+echo .idea/>> .gitignore
+echo *.iml>> .gitignore
+echo *.ipr>> .gitignore
+echo *.iws>> .gitignore
+echo .vscode/>> .gitignore
+echo.>> .gitignore
+echo # Eclipse>> .gitignore
+echo .eclipse>> .gitignore
+echo .metadata>> .gitignore
+echo bin/>> .gitignore
+echo tmp/>> .gitignore
+echo *.tmp>> .gitignore
+echo *.bak>> .gitignore
+echo *.swp>> .gitignore
+echo *~.nib>> .gitignore
+echo local.properties>> .gitignore
+echo .settings/>> .gitignore
+echo .loadpath>> .gitignore
+echo .recommenders>> .gitignore
+echo .project>> .gitignore
+echo .classpath>> .gitignore
+echo.>> .gitignore
+echo # Java>> .gitignore
+echo *.class>> .gitignore
+echo *.log>> .gitignore
+echo *.ctxt>> .gitignore
+echo .mtj.tmp/>> .gitignore
+echo hs_err_pid*>> .gitignore
+echo replay_pid*>> .gitignore
+echo.>> .gitignore
+echo # Spring Boot>> .gitignore
+echo target/>> .gitignore
+echo !.mvn/wrapper/maven-wrapper.jar>> .gitignore
+echo !**/src/main/**/target/>> .gitignore
+echo !**/src/test/**/target/>> .gitignore
+echo.>> .gitignore
+echo # OS>> .gitignore
+echo .DS_Store>> .gitignore
+echo .DS_Store?>> .gitignore
+echo ._*>> .gitignore
+echo .Spotlight-V100>> .gitignore
+echo .Trashes>> .gitignore
+echo ehthumbs.db>> .gitignore
+echo Thumbs.db>> .gitignore
+echo.>> .gitignore
+echo # Application specific>> .gitignore
+echo logs/>> .gitignore
+echo application-local.yml>> .gitignore
+echo application-local.properties>> .gitignore
+echo /out/>> .gitignore
 goto :eof
