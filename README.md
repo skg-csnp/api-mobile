@@ -65,6 +65,7 @@ docs/                        # Architecture and design documentation            
 | 📁 Class Design               | [docs/class-design.md](docs/class-design.md)                       |
 | 📁 Shared Database Design     | [docs/shared-db-schema.md](docs/shared-db-schema.md)               |
 | 📁 Git ISO process            | [docs/git-iso-process.md](docs/git-iso-process.md)                 |
+| 📁 Migrations Database        | [docs/migrations-db.md](docs/migrations-db.md)                     |
 
 ---
 
