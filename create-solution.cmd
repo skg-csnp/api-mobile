@@ -21,26 +21,26 @@ call :create_root_gradle
 :: SeedWork - Foundation layers (Shared Libraries)
 echo Creating SeedWork foundation layers...
 call :create_java_lib %SHARED_DIR%\seedwork
-call :create_package_structure %SHARED_DIR%\seedwork\src\main\java\%PACKAGE_PATH%\seedwork\domain valueobjects
-call :create_package_structure %SHARED_DIR%\seedwork\src\main\java\%PACKAGE_PATH%\seedwork\domain events
-call :create_package_structure %SHARED_DIR%\seedwork\src\main\java\%PACKAGE_PATH%\seedwork application
+call :create_package_structure %SHARED_DIR%\seedwork\src\main\java\%PACKAGE_PATH%\seedwork\domain\valueobjects
+call :create_package_structure %SHARED_DIR%\seedwork\src\main\java\%PACKAGE_PATH%\seedwork\domain\events
+call :create_package_structure %SHARED_DIR%\seedwork\src\main\java\%PACKAGE_PATH%\seedwork\application
 
 :: SharedKernel - Shared domain logic
 echo Creating SharedKernel shared domain logic layers...
 call :create_java_lib %SHARED_DIR%\shared-kernel-domain
-call :create_package_structure %SHARED_DIR%\shared-kernel-domain\src\main\java\%PACKAGE_PATH%\sharedkernel\domain events
-call :create_package_structure %SHARED_DIR%\shared-kernel-domain\src\main\java\%PACKAGE_PATH%\sharedkernel\domain exceptions
-call :create_package_structure %SHARED_DIR%\shared-kernel-domain\src\main\java\%PACKAGE_PATH%\sharedkernel\domain rules
+call :create_package_structure %SHARED_DIR%\shared-kernel-domain\src\main\java\%PACKAGE_PATH%\sharedkernel\domain\events
+call :create_package_structure %SHARED_DIR%\shared-kernel-domain\src\main\java\%PACKAGE_PATH%\sharedkernel\domain\exceptions
+call :create_package_structure %SHARED_DIR%\shared-kernel-domain\src\main\java\%PACKAGE_PATH%\sharedkernel\domain\rules
 
 call :create_java_lib %SHARED_DIR%\shared-kernel-application
-call :create_package_structure %SHARED_DIR%\shared-kernel-application\src\main\java\%PACKAGE_PATH%\sharedkernel\application behaviors
-call :create_package_structure %SHARED_DIR%\shared-kernel-application\src\main\java\%PACKAGE_PATH%\sharedkernel\application commands
-call :create_package_structure %SHARED_DIR%\shared-kernel-application\src\main\java\%PACKAGE_PATH%\sharedkernel\application queries
-call :create_package_structure %SHARED_DIR%\shared-kernel-application\src\main\java\%PACKAGE_PATH%\sharedkernel\application events
+call :create_package_structure %SHARED_DIR%\shared-kernel-application\src\main\java\%PACKAGE_PATH%\sharedkernel\application\behaviors
+call :create_package_structure %SHARED_DIR%\shared-kernel-application\src\main\java\%PACKAGE_PATH%\sharedkernel\application\commands
+call :create_package_structure %SHARED_DIR%\shared-kernel-application\src\main\java\%PACKAGE_PATH%\sharedkernel\application\queries
+call :create_package_structure %SHARED_DIR%\shared-kernel-application\src\main\java\%PACKAGE_PATH%\sharedkernel\application\events
 
 call :create_java_lib %SHARED_DIR%\shared-kernel-infrastructure
-call :create_package_structure %SHARED_DIR%\shared-kernel-infrastructure\src\main\java\%PACKAGE_PATH%\sharedkernel\infrastructure events
-call :create_package_structure %SHARED_DIR%\shared-kernel-infrastructure\src\main\java\%PACKAGE_PATH%\sharedkernel\infrastructure messaging
+call :create_package_structure %SHARED_DIR%\shared-kernel-infrastructure\src\main\java\%PACKAGE_PATH%\sharedkernel\infrastructure\events
+call :create_package_structure %SHARED_DIR%\shared-kernel-infrastructure\src\main\java\%PACKAGE_PATH%\sharedkernel\infrastructure\messaging
 
 :: Security Infrastructure - Cross-cutting utilities
 echo Creating Security Infrastructure cross-cutting layer...
@@ -50,51 +50,51 @@ call :create_package_structure %SHARED_DIR%\security-infrastructure\src\main\jav
 :: EventBus - Event-driven communication
 echo Creating EventBus layer...
 call :create_java_lib %SHARED_DIR%\event-bus
-call :create_package_structure %SHARED_DIR%\event-bus\src\main\java\%PACKAGE_PATH%\eventbus abstractions
-call :create_package_structure %SHARED_DIR%\event-bus\src\main\java\%PACKAGE_PATH%\eventbus inmemory
-call :create_package_structure %SHARED_DIR%\event-bus\src\main\java\%PACKAGE_PATH%\eventbus rabbitmq
+call :create_package_structure %SHARED_DIR%\event-bus\src\main\java\%PACKAGE_PATH%\eventbus\abstractions
+call :create_package_structure %SHARED_DIR%\event-bus\src\main\java\%PACKAGE_PATH%\eventbus\inmemory
+call :create_package_structure %SHARED_DIR%\event-bus\src\main\java\%PACKAGE_PATH%\eventbus\rabbitmq
 
 :: Credential Bounded Context
 echo Creating Credential bounded context...
 call :create_spring_boot_app %SRC_DIR%\credential\credential-api
 
 call :create_java_lib %SRC_DIR%\credential\credential-application
-call :create_package_structure %SRC_DIR%\credential\credential-application\src\main\java\%PACKAGE_PATH%\credential\application commands
-call :create_package_structure %SRC_DIR%\credential\credential-application\src\main\java\%PACKAGE_PATH%\credential\application queries
-call :create_package_structure %SRC_DIR%\credential\credential-application\src\main\java\%PACKAGE_PATH%\credential\application events
-call :create_package_structure %SRC_DIR%\credential\credential-application\src\main\java\%PACKAGE_PATH%\credential\application behaviors
+call :create_package_structure %SRC_DIR%\credential\credential-application\src\main\java\%PACKAGE_PATH%\credential\application\commands
+call :create_package_structure %SRC_DIR%\credential\credential-application\src\main\java\%PACKAGE_PATH%\credential\application\queries
+call :create_package_structure %SRC_DIR%\credential\credential-application\src\main\java\%PACKAGE_PATH%\credential\application\events
+call :create_package_structure %SRC_DIR%\credential\credential-application\src\main\java\%PACKAGE_PATH%\credential\application\behaviors
 
 call :create_java_lib %SRC_DIR%\credential\credential-domain
-call :create_package_structure %SRC_DIR%\credential\credential-domain\src\main\java\%PACKAGE_PATH%\credential\domain aggregates
-call :create_package_structure %SRC_DIR%\credential\credential-domain\src\main\java\%PACKAGE_PATH%\credential\domain events
-call :create_package_structure %SRC_DIR%\credential\credential-domain\src\main\java\%PACKAGE_PATH%\credential\domain specifications
+call :create_package_structure %SRC_DIR%\credential\credential-domain\src\main\java\%PACKAGE_PATH%\credential\domain\aggregates
+call :create_package_structure %SRC_DIR%\credential\credential-domain\src\main\java\%PACKAGE_PATH%\credential\domain\events
+call :create_package_structure %SRC_DIR%\credential\credential-domain\src\main\java\%PACKAGE_PATH%\credential\domain\specifications
 
 call :create_java_lib %SRC_DIR%\credential\credential-infrastructure
-call :create_package_structure %SRC_DIR%\credential\credential-infrastructure\src\main\java\%PACKAGE_PATH%\credential\infrastructure persistence
-call :create_package_structure %SRC_DIR%\credential\credential-infrastructure\src\main\java\%PACKAGE_PATH%\credential\infrastructure external
-call :create_package_structure %SRC_DIR%\credential\credential-infrastructure\src\main\java\%PACKAGE_PATH%\credential\infrastructure services
-call :create_package_structure %SRC_DIR%\credential\credential-infrastructure\src\main\java\%PACKAGE_PATH%\credential\infrastructure events
+call :create_package_structure %SRC_DIR%\credential\credential-infrastructure\src\main\java\%PACKAGE_PATH%\credential\infrastructure\persistence
+call :create_package_structure %SRC_DIR%\credential\credential-infrastructure\src\main\java\%PACKAGE_PATH%\credential\infrastructure\external
+call :create_package_structure %SRC_DIR%\credential\credential-infrastructure\src\main\java\%PACKAGE_PATH%\credential\infrastructure\services
+call :create_package_structure %SRC_DIR%\credential\credential-infrastructure\src\main\java\%PACKAGE_PATH%\credential\infrastructure\events
 
 :: Notification Bounded Context
 echo Creating Notification bounded context...
 call :create_spring_boot_app %SRC_DIR%\notification\notification-api
 
 call :create_java_lib %SRC_DIR%\notification\notification-application
-call :create_package_structure %SRC_DIR%\notification\notification-application\src\main\java\%PACKAGE_PATH%\notification\application commands
-call :create_package_structure %SRC_DIR%\notification\notification-application\src\main\java\%PACKAGE_PATH%\notification\application queries
-call :create_package_structure %SRC_DIR%\notification\notification-application\src\main\java\%PACKAGE_PATH%\notification\application events
-call :create_package_structure %SRC_DIR%\notification\notification-application\src\main\java\%PACKAGE_PATH%\notification\application behaviors
+call :create_package_structure %SRC_DIR%\notification\notification-application\src\main\java\%PACKAGE_PATH%\notification\application\commands
+call :create_package_structure %SRC_DIR%\notification\notification-application\src\main\java\%PACKAGE_PATH%\notification\application\queries
+call :create_package_structure %SRC_DIR%\notification\notification-application\src\main\java\%PACKAGE_PATH%\notification\application\events
+call :create_package_structure %SRC_DIR%\notification\notification-application\src\main\java\%PACKAGE_PATH%\notification\application\behaviors
 
 call :create_java_lib %SRC_DIR%\notification\notification-domain
-call :create_package_structure %SRC_DIR%\notification\notification-domain\src\main\java\%PACKAGE_PATH%\notification\domain aggregates
-call :create_package_structure %SRC_DIR%\notification\notification-domain\src\main\java\%PACKAGE_PATH%\notification\domain events
-call :create_package_structure %SRC_DIR%\notification\notification-domain\src\main\java\%PACKAGE_PATH%\notification\domain specifications
+call :create_package_structure %SRC_DIR%\notification\notification-domain\src\main\java\%PACKAGE_PATH%\notification\domain\aggregates
+call :create_package_structure %SRC_DIR%\notification\notification-domain\src\main\java\%PACKAGE_PATH%\notification\domain\events
+call :create_package_structure %SRC_DIR%\notification\notification-domain\src\main\java\%PACKAGE_PATH%\notification\domain\specifications
 
 call :create_java_lib %SRC_DIR%\notification\notification-infrastructure
-call :create_package_structure %SRC_DIR%\notification\notification-infrastructure\src\main\java\%PACKAGE_PATH%\notification\infrastructure persistence
-call :create_package_structure %SRC_DIR%\notification\notification-infrastructure\src\main\java\%PACKAGE_PATH%\notification\infrastructure external
-call :create_package_structure %SRC_DIR%\notification\notification-infrastructure\src\main\java\%PACKAGE_PATH%\notification\infrastructure services
-call :create_package_structure %SRC_DIR%\notification\notification-infrastructure\src\main\java\%PACKAGE_PATH%\notification\infrastructure events
+call :create_package_structure %SRC_DIR%\notification\notification-infrastructure\src\main\java\%PACKAGE_PATH%\notification\infrastructure\persistence
+call :create_package_structure %SRC_DIR%\notification\notification-infrastructure\src\main\java\%PACKAGE_PATH%\notification\infrastructure\external
+call :create_package_structure %SRC_DIR%\notification\notification-infrastructure\src\main\java\%PACKAGE_PATH%\notification\infrastructure\services
+call :create_package_structure %SRC_DIR%\notification\notification-infrastructure\src\main\java\%PACKAGE_PATH%\notification\infrastructure\events
 
 :: Presentation
 echo Creating Presentation layer...
@@ -315,11 +315,11 @@ echo }>> "%JAVA_FILE%"
 goto :eof
 
 :create_package_structure
-set FULL_PATH=%~1
-set PACKAGE_PATH=%~2
-if not exist "%FULL_PATH%" mkdir "%FULL_PATH%" 2>nul
-if not exist "%FULL_PATH%\%PACKAGE_PATH%" mkdir "%FULL_PATH%\%PACKAGE_PATH%" 2>nul
-echo. > "%FULL_PATH%\%PACKAGE_PATH%\.gitkeep"
+set "FULL_PATH=%~1"
+if not exist "%FULL_PATH%" (
+    mkdir "%FULL_PATH%" 2>nul
+)
+echo. > "%FULL_PATH%\.gitkeep"
 goto :eof
 
 :create_test_project
