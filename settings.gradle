@@ -1,0 +1,47 @@
+rootProject.name = 'csnp' 
+
+// Shared libraries
+include 'shared:seedwork'
+include 'shared:shared-kernel-domain'
+include 'shared:shared-kernel-application'
+include 'shared:shared-kernel-infrastructure'
+include 'shared:security-infrastructure'
+include 'shared:event-bus'
+
+// Credential bounded context
+include 'src:credential:credential-domain'
+include 'src:credential:credential-application'
+include 'src:credential:credential-infrastructure'
+include 'src:credential:credential-api'
+
+// Notification bounded context
+include 'src:notification:notification-domain'
+include 'src:notification:notification-application'
+include 'src:notification:notification-infrastructure'
+include 'src:notification:notification-api'
+
+// Presentation
+include 'src:presentation:presentation-web'
+
+// Migrations
+include 'migrations:credential-migrations'
+include 'migrations:notification-migrations'
+
+// Project directory mapping
+project(':shared:seedwork').projectDir = file('shared/seedwork')
+project(':shared:shared-kernel-domain').projectDir = file('shared/shared-kernel-domain')
+project(':shared:shared-kernel-application').projectDir = file('shared/shared-kernel-application')
+project(':shared:shared-kernel-infrastructure').projectDir = file('shared/shared-kernel-infrastructure')
+project(':shared:security-infrastructure').projectDir = file('shared/security-infrastructure')
+project(':shared:event-bus').projectDir = file('shared/event-bus')
+project(':src:credential:credential-domain').projectDir = file('src/credential/credential-domain')
+project(':src:credential:credential-application').projectDir = file('src/credential/credential-application')
+project(':src:credential:credential-infrastructure').projectDir = file('src/credential/credential-infrastructure')
+project(':src:credential:credential-api').projectDir = file('src/credential/credential-api')
+project(':src:notification:notification-domain').projectDir = file('src/notification/notification-domain')
+project(':src:notification:notification-application').projectDir = file('src/notification/notification-application')
+project(':src:notification:notification-infrastructure').projectDir = file('src/notification/notification-infrastructure')
+project(':src:notification:notification-api').projectDir = file('src/notification/notification-api')
+project(':src:presentation:presentation-web').projectDir = file('src/presentation/presentation-web')
+project(':migrations:credential-migrations').projectDir = file('migrations/credential-migrations')
+project(':migrations:notification-migrations').projectDir = file('migrations/notification-migrations')
