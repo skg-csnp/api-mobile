@@ -1,9 +1,21 @@
-dependencies { 
-    implementation 'org.springframework:spring-context'
-    implementation 'org.springframework:spring-core'
-    implementation 'jakarta.validation:jakarta.validation-api'
-    implementation 'org.slf4j:slf4j-api'
+buildscript {
+ 
+    dependencies {
+        classpath 'org.postgresql:postgresql:42.7.7'
+        classpath 'org.flywaydb:flyway-database-postgresql:11.10.5'
+    }
 }
-dependencies {
-    implementation project(':src:credential:credential-infrastructure')
+
+plugins {
+    id 'java'
+    id 'org.flywaydb.flyway' version '11.10.5'
+}
+
+flyway {
+    url = project.property('flyway.url')
+    user = project.property('flyway.user')
+    password = project.property('flyway.password')
+    schemas = ['credential']
+    locations = ['filesystem:src/main/resources/db/migration']
+    baselineOnMigrate = true
 }

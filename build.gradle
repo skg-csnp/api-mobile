@@ -1,4 +1,4 @@
-plugins { 
+plugins {
     id 'java'
     id 'org.springframework.boot' version '3.5.4' apply false
     id 'io.spring.dependency-management' version '1.1.7' apply false
@@ -15,6 +15,8 @@ allprojects {
 
 subprojects {
     apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
 
     java {
         toolchain {
@@ -24,9 +26,6 @@ subprojects {
 
     dependencies {
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
-        testImplementation 'org.junit.jupiter:junit-jupiter'
-        testImplementation 'org.mockito:mockito-core'
-        testImplementation 'org.assertj:assertj-core'
     }
 
     test {
