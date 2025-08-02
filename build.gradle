@@ -8,27 +8,28 @@ allprojects {
     group = 'com.csnp'
     version = '1.0.0'
 
-    repositories {
-        mavenCentral()
-    }
-}
-
-subprojects {
-    apply plugin: 'java'
-    apply plugin: 'org.springframework.boot'
-    apply plugin: 'io.spring.dependency-management'
-
-    java {
-        toolchain {
-            languageVersion = JavaLanguageVersion.of(21)
-        }
-    }
-
-    dependencies {
-        testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    }
-
-    test {
-        useJUnitPlatform()
-    }
-}
+ 
+subprojects { 
+    apply plugin: 'java' 
+ 
+    java { 
+        toolchain { 
+            languageVersion = JavaLanguageVersion.of(21) 
+        } 
+    } 
+ 
+    repositories { 
+        mavenCentral() 
+    } 
+ 
+    dependencies { 
+        testImplementation 'org.springframework.boot:spring-boot-starter-test' 
+        testImplementation 'org.junit.jupiter:junit-jupiter' 
+        testImplementation 'org.mockito:mockito-core' 
+        testImplementation 'org.assertj:assertj-core' 
+    } 
+ 
+    test { 
+        useJUnitPlatform() 
+    } 
+} 
