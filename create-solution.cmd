@@ -178,9 +178,6 @@ echo     }>> build.gradle
 echo.>> build.gradle
 echo     dependencies {>> build.gradle
 echo         testImplementation 'org.springframework.boot:spring-boot-starter-test'>> build.gradle
-echo         testImplementation 'org.junit.jupiter:junit-jupiter'>> build.gradle
-echo         testImplementation 'org.mockito:mockito-core'>> build.gradle
-echo         testImplementation 'org.assertj:assertj-core'>> build.gradle
 echo     }>> build.gradle
 echo.>> build.gradle
 echo     test {>> build.gradle
