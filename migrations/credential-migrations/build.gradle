@@ -1,25 +1,13 @@
 plugins {
-    id 'java'
-    id 'org.flywaydb.flyway' version '9.22.3'
-}
-
-group = 'com.csnp'
-version = '1.0.0'
-
-repositories {
-    mavenCentral()
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
 }
 
 dependencies {
-    implementation 'org.flywaydb:flyway-core:9.22.3'
-    implementation 'org.postgresql:postgresql:42.7.7'
-}
+    implementation project(':src:credential:credential-infrastructure')
 
-flyway {
-    url = project.property('flyway.url')
-    user = project.property('flyway.user')
-    password = project.property('flyway.password')
-    schemas = ['public']
-    locations = ['filesystem:src/main/resources/db/migration']
-    baselineOnMigrate = true
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.liquibase:liquibase-core'
+    runtimeOnly 'org.postgresql:postgresql'
 }
