@@ -1,9 +1,25 @@
-dependencies { 
-    implementation 'org.springframework:spring-context'
-    implementation 'org.springframework:spring-core'
-    implementation 'jakarta.validation:jakarta.validation-api'
-    implementation 'org.slf4j:slf4j-api'
+plugins {
+    id 'java'
+    id 'org.flywaydb.flyway' version '9.22.3'
 }
+
+group = 'com.csnp'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
 dependencies {
-    implementation project(':src:notification:notification-infrastructure')
+    implementation 'org.flywaydb:flyway-core:9.22.3'
+    implementation 'org.postgresql:postgresql:42.7.7'
+}
+
+flyway {
+    url = project.property('flyway.url')
+    user = project.property('flyway.user')
+    password = project.property('flyway.password')
+    schemas = ['public']
+    locations = ['filesystem:src/main/resources/db/migration']
+    baselineOnMigrate = true
 }
