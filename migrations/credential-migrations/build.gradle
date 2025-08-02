@@ -19,3 +19,13 @@ flyway {
     locations = ['filesystem:src/main/resources/db/migration']
     baselineOnMigrate = true
 }
+
+// Disable Spring Boot jar task (nếu bị apply từ project cha)
+tasks.matching { it.name == 'bootJar' }.configureEach {
+    enabled = false
+}
+
+// Ensure regular jar is enabled
+tasks.matching { it.name == 'jar' }.configureEach {
+    enabled = true
+}
